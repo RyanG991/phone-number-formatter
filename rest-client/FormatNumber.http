@@ -1,0 +1,27 @@
+POST http://localhost:50153/phonenumbers/prettify HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+"+442012345678"
+###
+
+POST http://localhost:50153/phonenumbers/prettify HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+"+441339712345"
+###
+
+POST http://localhost:50153/phonenumbers/prettify HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+"+441339612345"
+###
+
+POST http://localhost:50153/phonenumbers/prettify HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+"+441134960018"
+###

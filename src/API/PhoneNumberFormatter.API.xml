@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PhoneNumberFormatter.API</name>
+    </assembly>
+    <members>
+        <member name="T:PhoneNumberFormatter.API.Controllers.APIInformationController">
+            <summary>
+            Provides information about the running API
+            </summary>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Controllers.APIInformationController.Get">
+            <summary>
+            Returns the basic API information, e.g. version
+            </summary>
+            <response code="200">Returns the basic API information, e.g. version</response>
+            <response code="500">Unexpected server error</response>  
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Controllers.PhoneNumbersController.PrettifyE164(System.String)">
+            <summary>
+            Prettifies a E.164 format phone number
+            </summary>
+            <response code="200">Returns the phone number in its prettified format</response>
+            <response code="400">Invalid phone number supplied</response> 
+            <response code="500">Unexpected error or issue with formatting</response>         
+        </member>
+        <member name="T:PhoneNumberFormatter.API.Helpers.Controllers.BaseApiController">
+            <summary>
+            Contains common/universal functions for all controllers
+            </summary>
+            <remarks>TODO - move code into seperate logic class to facilitate unit testing</remarks>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Helpers.Controllers.BaseApiController.HandleError(System.Exception)">
+            <summary>
+            Handles an exception, logging it and building an error response
+            </summary>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Helpers.Controllers.BaseApiController.InternalServerError(System.String)">
+            <summary>
+            Builds an Internal Server Error response (500)
+            </summary>
+        </member>
+        <member name="T:PhoneNumberFormatter.API.Interfaces.Services.Formatting.IPhoneNumberFormattingService">
+            <summary>
+            Exposes method(s) for formatting phone numbers
+            </summary>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Interfaces.Services.Formatting.IPhoneNumberFormattingService.PrettifyE164(System.String)">
+            <summary>
+            Prettify (format) and E.164 formatted number
+            </summary>
+        </member>
+        <member name="T:PhoneNumberFormatter.API.Interfaces.Services.User.IUserVerificationService">
+            <summary>
+            Exposes method(s) for verifying user data
+            </summary>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Interfaces.Services.User.IUserVerificationService.UserExists(System.String)">
+            <summary>
+            Checks whether a user name exists in our database and returns the found user.
+            </summary>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Interfaces.Services.User.IUserVerificationService.VerifyPassword(System.String,PhoneNumberFormatter.UserRepository.DTOs.User)">
+            <summary>
+            Verifies a user's password against one sent to the API
+            </summary>
+        </member>
+        <member name="T:PhoneNumberFormatter.API.Middleware.BasicAuthenticationHandler">
+            <summary>
+            Custom handler for "basic" our authentication
+            </summary>
+            <remarks>TODO - move code into seperate logic class to facilitate unit testing</remarks>
+        </member>
+        <member name="T:PhoneNumberFormatter.API.Services.Formatting.PhoneNumberFormattingService">
+            <inheritdoc cref="T:PhoneNumberFormatter.API.Interfaces.Services.Formatting.IPhoneNumberFormattingService" />
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.Formatting.PhoneNumberFormattingService.#ctor(PhoneNumberFormatter.FormattingRepository.Interfaces.IPhoneNumberFormatsStore,Microsoft.Extensions.Logging.ILogger{PhoneNumberFormatter.API.Services.Formatting.PhoneNumberFormattingService})">
+            <inheritdoc cref="T:PhoneNumberFormatter.API.Interfaces.Services.Formatting.IPhoneNumberFormattingService" />
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.Formatting.PhoneNumberFormattingService.PrettifyE164(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.Formatting.PhoneNumberFormattingService.ExtractCountryCodeFromE164(System.Text.RegularExpressions.Match)">
+            <summary>
+            Extracts the country code from a regex match on phone number
+            </summary>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.Formatting.PhoneNumberFormattingService.ExtractSubscriberNumberFromE164(System.Text.RegularExpressions.Match)">
+            <summary>
+            Extracts the subscriber from a regex match on phone number
+            </summary>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.Formatting.PhoneNumberFormattingService.FindMatchingFormat(System.String,System.Collections.Generic.List{PhoneNumberFormatter.FormattingRepository.Models.E164Format})">
+            <summary>
+            Finds a matching format for the phone number
+            </summary>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.Formatting.PhoneNumberFormattingService.FormatE164(System.String,PhoneNumberFormatter.FormattingRepository.Models.E164Format)">
+            <summary>
+            Applys a pretty format to a phone number
+            </summary>
+        </member>
+        <member name="T:PhoneNumberFormatter.API.Services.User.UserVerificationService">
+            <inheritdoc cref="T:PhoneNumberFormatter.API.Interfaces.Services.User.IUserVerificationService"/>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.User.UserVerificationService.#ctor(PhoneNumberFormatter.UserRepository.Interfaces.IGetUserStore,PhoneNumberFormatter.Hashing.Interfaces.IPasswordHasher,Microsoft.Extensions.Logging.ILogger{PhoneNumberFormatter.API.Services.User.UserVerificationService})">
+            <inheritdoc cref="T:PhoneNumberFormatter.API.Interfaces.Services.User.IUserVerificationService"/>
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.User.UserVerificationService.UserExists(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:PhoneNumberFormatter.API.Services.User.UserVerificationService.VerifyPassword(System.String,PhoneNumberFormatter.UserRepository.DTOs.User)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
