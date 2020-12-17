@@ -1,0 +1,38 @@
+GET http://localhost:50153/phonenumbers/+442012345678/prettified HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+###
+
+GET http://localhost:50153/phonenumbers/+441339712345/prettified HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+###
+
+GET http://localhost:50153/phonenumbers/+441339612345/prettified HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+###
+
+GET http://localhost:50153/phonenumbers/+441134960018/prettified HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+###
+
+
+GET http://localhost:50153/phonenumbers/+447806483877/prettified HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+###
+
+
+# Invalid
+GET http://localhost:50153/phonenumbers/+44706483877/prettified HTTP/1.1
+Content-Type: application/json
+Authorization: Basic dGVzdDpQYTU1dzByZA==
+
+###
