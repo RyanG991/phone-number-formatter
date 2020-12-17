@@ -1,12 +1,22 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhoneNumberFormatter.API.Interfaces.Services.Formatting;
+using PhoneNumberFormatter.API.Interfaces.Services.User;
+using PhoneNumberFormatter.API.Middleware;
 using PhoneNumberFormatter.API.Services.Formatting;
+using PhoneNumberFormatter.API.Services.User;
 using PhoneNumberFormatter.FormattingRepository.Interfaces;
 using PhoneNumberFormatter.FormattingRepository.Stores;
+using PhoneNumberFormatter.Hashing.Interfaces;
+using PhoneNumberFormatter.Hashing.Passwords;
+using PhoneNumberFormatter.UserRepository.Interfaces;
+using PhoneNumberFormatter.UserRepository.Stores;
 
 namespace PhoneNumberFormatter.API
 {
@@ -22,9 +32,16 @@ namespace PhoneNumberFormatter.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options => {
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
 
             services.AddSwaggerGen();
+
+            ConfigureAuthentication(services);
 
             ConfigureApplicationDI(services);
         }
@@ -45,15 +62,30 @@ namespace PhoneNumberFormatter.API
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
         }
 
+        private void ConfigureAuthentication(IServiceCollection services)
+        {
+            // Configure basic authentication 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+        }
+
         private void ConfigureApplicationDI(IServiceCollection services)
         {
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
+
+            services.AddSingleton<IUserVerificationService, UserVerificationService>();
             services.AddSingleton<IPhoneNumberFormattingService, PhoneNumberFormattingService>();
+
+            services.AddSingleton<IGetUserStore, StubGetUserStore>();
             services.AddSingleton<IPhoneNumberFormatsStore, PhoneNumberFormatsStore>();
         }
     }
